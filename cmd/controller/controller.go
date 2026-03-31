@@ -377,6 +377,7 @@ func (c *command) start(ctx context.Context, flags *config.ControllerOptions, de
 		StatusInformation: status.K0sStatus{
 			Pid:           os.Getpid(),
 			Role:          "controller",
+			NodeName:      string(nodeName),
 			Args:          os.Args,
 			Version:       build.Version,
 			Workloads:     controllerMode.WorkloadsEnabled(),

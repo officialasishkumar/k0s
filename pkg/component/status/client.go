@@ -20,6 +20,7 @@ type K0sStatus struct {
 	Pid                         int
 	PPid                        int
 	Role                        string
+	NodeName                    string
 	SysInit                     string
 	StubFile                    string
 	Output                      string

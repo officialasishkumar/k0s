@@ -297,6 +297,7 @@ func (c *Command) Start(ctx context.Context, nodeName apitypes.NodeName, kubelet
 			StatusInformation: status.K0sStatus{
 				Pid:        os.Getpid(),
 				Role:       "worker",
+				NodeName:   string(nodeName),
 				Args:       os.Args,
 				Version:    build.Version,
 				Workloads:  true,

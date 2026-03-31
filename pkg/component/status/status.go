@@ -125,7 +125,15 @@ func (sh *statusHandler) getCurrentStatus(ctx context.Context) K0sStatus {
 		}
 		sh.client = kubeClient
 	}
-	_, err := sh.client.CoreV1().Nodes().List(context.Background(), v1.ListOptions{})
+
+	// Nodes can always read their own Node object, but newer Kubernetes
+	// versions may forbid cluster-wide node listings for kubelet credentials.
+	var err error
+	if status.NodeName != "" {
+		_, err = sh.client.CoreV1().Nodes().Get(ctx, status.NodeName, v1.GetOptions{})
+	} else {
+		_, err = sh.client.CoreV1().Nodes().List(ctx, v1.ListOptions{})
+	}
 	if err != nil {
 		status.WorkerToAPIConnectionStatus.Message = err.Error()
 		return status
